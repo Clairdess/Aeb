@@ -50,24 +50,23 @@
                         <p th:if="${error}" class="error">Ошибка регистрации</p>
                         <form th:action="@{/auth/registration}"th:object="${user}" method="post">
                             <p>
-                                <label for="email">Email:</label>
-                                <input type="text" id="email" name="email" autofocus="autofocus"/> <br/>
+                                <label class="form-label" for="email">Email:</label>
+                                <input class="form-input" type="text" id="email" name="email" autofocus="autofocus"/> <br/>
                             </p>
                             <p>
-                                <label for="password">пароль:</label>
-                                <input type="password" id="password" name="password"/> <br/>
+                                <label class="form-label" for="password">пароль:</label>
+                                <input class="form-input" type="password" id="password" name="password"/> <br/>
                             </p>
                             <p>
-                                <label for="userRole">Роль пользователя</label>
-                                <select name="userRole" id="userRole">
+                                <label class="form-label" for="userRole">Роль:</label>
+                                <select class="form-input" name="userRole" id="userRole">
                                     <option value="ADMIN">администратор</option>
                                     <option value="USER">обычный пользователь</option>
                                 </select>
                             </p>
                             <br/>
-                            <input type="submit" value="зарегистрированный"/><br/>
-                            <a href="index.html" th:href="@{/}">Вернуться на главную</a> <br/>
-                            <a href="login.html" th:href="@{/login}">авторизоваться</a>
+                            <input type="submit" class="form-button" value="Зарегистрироваться"/><br/>
+                            <a th:href="@{/login}">Войти в аккаунт</a>
                         </form>
 
                     </div>
