@@ -2,9 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial scale=1.0">
-        <title>АЭБ FUTURE</title>
-        <link href="/static/css/student-account.css" th:href="@{/css/student-account.css}" rel="stylesheet" />
+	    <meta name="viewport" content="width=device-width, initial scale=1.0">
+	    <title>AEB FUTURE</title>
+        <link href="../static/plugins/owl.carousel.min.css" th:href="@{/plugins/owl.carousel.min.css}" rel="stylesheet" />
+        <link href="../static/plugins/owl.theme.default.min.css" th:href="@{/plugins/owl.theme.default.min.css}" rel="stylesheet" />
+        <link href="../static/css/master.css" th:href="@{/css/master.css}" rel="stylesheet" />
     </head>
     <body> 
         <div id="wrapper">
@@ -26,97 +28,16 @@
                     </div>
                     <div class="header-tabs">
                         <a href="/interns" class="header-internships">Посмотреть стажировки</a>
-                        <a href="/login" class="header-personal-account">Личный кабинет</a>
+                        <a href="/profile" class="header-personal-account">Личный кабинет</a>
                     </div>
                 </div>
             </header>
-            <main>
-                <div id="tabs">
-                    <ul class="tabs-nav">
-                        <li><a href="#tab-1">Профиль</a></li>
-                        <li><a href="#tab-2">Стажировки</a></li>
-                        <li><a href="#tab-3">Tab 3</a></li>
-                    </ul>   
-                    <div class="tabs-items">
-                        <div class="tabs-item" id="tab-1">
-                            <div class="form hr-account-tabs-content">
-                                <form class="hr-account-tabs-content">
-                                    <div class="form-field">
-                                        <label for="hr-account-surname" class="form-label">Фамилия</label>
-                                        <input type="text" class="form-input" id="hr-account-surname" name="hr-account-surname">
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="hr-account-first-name" class="form-label">Имя</label>
-                                        <input type="text" class="form-input" id="hr-account-first-name" name="hr-account-first-name">
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="hr-account-last-name" class="form-label">Отчество</label>
-                                        <input type="text" class="form-input" id="hr-account-last-name" name="hr-account-last-name">
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="hr-account-date-of-birth" class="form-label">Дата рождения</label>
-                                        <input type="date" class="form-input" id="hr-account-date-of-birth" name="hr-account-date-of-birth">
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="hr-role" class="form-label">Роль</label>
-                                        <select name="hr-role" id="hr-role" class="form-input">
-                                            <option value=""></option>
-                                            <option value="hr">HR</option>
-                                            <option value="mentor">Наставник</option>
-                                            <option value="expert">Эксперт</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="hr-account-email" class="form-label">E-mail</label>
-                                        <input type="email" class="form-input" id="hr-account-email" name="hr-account-email">
-                                    </div>
-                                    <div class="form-field">
-                                        <label for="hr-account-phone-number" class="form-label">Номер телефона</label>
-                                        <input type="text" class="form-input" id="hr-account-phone-number" name="hr-account-phone-number">
-                                    </div>
-                                    <button type="submit" class="form-button">Сохранить изменения</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tabs-item" id="tab-2">
-                            <br>
-                            <p style="text-align: center;">Стажировка на направлении ""</p>
-                            <form class="account-hr-tabs-content">
-                                    <table style="width: 100%;">
-                                        <tr>
-                                            <th>№</th>
-                                            <th>ФИО</th>
-                                            <th>ВУЗ</th>
-                                            <th>Ступень</th>
-                                            <th>Направление</th>
-                                            <th>Почта</th>
-                                            <th>Телефон</th>
-                                            <th>Резюме</th>
-                                            <th>Статус заявки</th>
-                                        </tr>
-                                        <tr>
-                                            <td>f</td>
-                                            <td>f</td>
-                                            <td>f</td>
-                                            <td>f</td>
-                                            <td>f</td>
-                                            <td>f</td>
-                                            <td>f</td>
-                                            <td>f</td>
-                                            <td>f</td>
-                                        </tr>
-                                    </table>
-                                </form>
-                        </div>
-                        <div class="tabs-item" id="tab-3">
-                                
-                        </div>
-                    </div> 
-            </main>
+
             <footer>
+
             </footer>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="../js/registry-account.js"></script>
+        <script src="../js/main.js"></script>
     </body>
 </html>

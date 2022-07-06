@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import starcode.aeb.domain.User;
 import starcode.aeb.repo.UserRepository;
 
@@ -19,7 +21,7 @@ public class PageController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/registration")
+    @GetMapping("/profile")
     public String registration(Model model, Principal user) {
         model.addAttribute("profile", "SomeInterestingValue");
         if (user != null) {
@@ -35,13 +37,19 @@ public class PageController {
                 }
             }
         }
-        return "registration";
+        return "login";
+    }
+
+    @PostMapping("/profile")
+    public String getData(@ModelAttribute User user, Model model, Principal userD) {
+        model.addAttribute("greeting", user);
+        return "login";
     }
 
     @GetMapping("/interns")
     public String interns(Model model, Principal user) {
         if (user != null) {
-
+            return "interns";
 
         }
         return "login";

@@ -161,13 +161,6 @@ form {
     width: 50%;
 }
 
-.tabs-nav li {
-	display: table-cell;
-	float: none;
-	margin: 0;
-	padding: 0;
-    width: 20%;
-}   
 
 .tabs-nav a {
 	display: block;
