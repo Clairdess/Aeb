@@ -1,3 +1,3 @@
-FROM openjdk:11
-ADD /target/Aeb-0.0.1-SNAPSHOT.jar backend.jar
+FROM azul/zulu-openjdk-alpine:11
+ADD /target/Aeb-1.jar backend.jar
 ENTRYPOINT ["java", "-jar", "backend.jar"]
