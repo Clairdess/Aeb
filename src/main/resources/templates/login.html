@@ -28,29 +28,37 @@
                 </a>
             </div>
             <div class="header-tabs">
-                <a href="internships/" class="header-internships">Посмотреть стажировки</a>
-                <a href="enter-account/" class="header-personal-account">Личный кабинет</a>
+                <a href="/interns" class="header-internships">Посмотреть стажировки</a>
+                <a href="/profile" class="header-personal-account">Личный кабинет</a>
             </div>
         </div>
     </header>
     <main>
         <div class="container">
+            <p th:if="${error}" class="error">Ошибка регистрации</p>
             <form class="form-signin" method="post" action="/auth/login">
                 <h2 class="form-signin-heading">Войти в аккаунт</h2>
                 <p>
-                    <label for="username">Почта</label>
-                    <input type="text" id="username" name="username" class="form-control"
+                    <label class="form-label" for="username">Почта</label>
+                    <input type="text" id="username" name="username" class="form-input"
                            placeholder="Введите свою почту" required>
                 </p>
                 <p>
-                    <label for="password">Пароль</label>
-                    <input type="password" id="password" name="password" class="form-control"
+                    <label class="form-label" for="password">Пароль</label>
+                    <input class="form-input" type="password" id="password" name="password"
                            placeholder="Введите свой пароль" required>
                 </p>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+                <button class="form-button" type="submit">Войти</button>
             </form>
-            <div><a href="/auth/registration">Зарегистрироваться</a></div>
-            <div><a href="/logout">Выйти</a></div>
+            <div>
+                <form th:action="@{/auth/registration}" method="GET">
+                    <button class="form-button" type="submit">Зарегистрироваться</button>
+                </form>
+            </div>
+            <div>
+                <a th:href="@{/oauth2/authorization/google}">Login with Google</a>
+            </div>
+
         </div>
 
     </main>

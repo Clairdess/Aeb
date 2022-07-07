@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Intern {
@@ -22,6 +23,11 @@ public class Intern {
     private LocalDateTime endsAt;
 
     @OneToMany
-    @JoinColumn(name = "events_id")
-    private List<Event> events;
+    @JoinColumn(name = "intern_id")
+    private Set<Event> events;
+
+    @OneToMany
+    @JoinColumn(name = "intern_id")
+    private Set<User> users;
+
 }

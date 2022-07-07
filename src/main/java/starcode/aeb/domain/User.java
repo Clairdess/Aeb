@@ -30,10 +30,10 @@ public class User {
     private String phone;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
-    private Role role;
+    private Role role = Role.USER;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     @Override
     public boolean equals(Object o) {

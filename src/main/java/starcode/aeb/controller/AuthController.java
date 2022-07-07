@@ -22,39 +22,43 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
-
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String loginPage(Model model) {
         return "login";
     }
 
-    @RequestMapping("/registration-error")
-    public String registerError(Model model) {
+    @PostMapping("/login?error")
+    public String loginPageError(Model model) {
         model.addAttribute("error", true);
-        return "register";
+        return "login";
     }
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+        model.addAttribute("user", new User());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String getSuccessPage(@ModelAttribute User user, Model model) {
+    public String createUser(@ModelAttribute("user") User user, Model model) {
         if (user.getEmail() == null || user.getPassword() == null || user.getRole() == null) {
             model.addAttribute("error", true);
             return "registration";
         }
         try {
+            if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+                model.addAttribute("error", true);
+                return "registration";
+            }
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             String password = bCryptPasswordEncoder.encode(user.getPassword());
+
             user.setPassword(password);
             userRepository.save(user);
-            return "redirect:/login";
+            return "redirect:/";
         } catch (Exception e) {
-            // Ошибка регистрации
             model.addAttribute("error", true);
-            return "register";
+            return "registration";
         }
     }
 }

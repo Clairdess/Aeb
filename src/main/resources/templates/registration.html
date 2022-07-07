@@ -30,7 +30,7 @@
             </div>
             <div class="header-tabs">
                 <a href="/interns" class="header-internships">Посмотреть стажировки</a>
-                <a href="/login" class="header-personal-account">Личный кабинет</a>
+                <a href="/profile" class="header-personal-account">Личный кабинет</a>
             </div>
         </div>
     </header>
@@ -42,71 +42,30 @@
             <div id="tabs">
                 <ul class="tabs-nav">
                     <li><a href="#tab-1">Студент</a></li>
-                    <li><a href="#tab-2">Сотрудник АЭБ</a></li>
                 </ul>
 
                 <div class="tabs-items">
                     <div class="tabs-item" id="tab-1">
                         <p th:if="${error}" class="error">Ошибка регистрации</p>
-                        <form th:action="@{/auth/registration}"th:object="${user}" method="post">
+                        <form th:method="POST" th:action="@{/auth/registration}" th:object="${user}">
                             <p>
                                 <label class="form-label" for="email">Email:</label>
-                                <input class="form-input" type="text" id="email" name="email" autofocus="autofocus"/> <br/>
+                                <input class="form-input" th:field="*{email}" type="email" id="email" name="email"
+                                       autofocus="autofocus"/> <br/>
                             </p>
                             <p>
                                 <label class="form-label" for="password">пароль:</label>
-                                <input class="form-input" type="password" id="password" name="password"/> <br/>
-                            </p>
-                            <p>
-                                <label class="form-label" for="userRole">Роль:</label>
-                                <select class="form-input" name="userRole" id="userRole">
-                                    <option value="ADMIN">администратор</option>
-                                    <option value="USER">обычный пользователь</option>
-                                </select>
+                                <input class="form-input" th:field="*{password}" type="password" id="password"
+                                       name="password"/> <br/>
                             </p>
                             <br/>
                             <input type="submit" class="form-button" value="Зарегистрироваться"/><br/>
-                            <a th:href="@{/login}">Войти в аккаунт</a>
-                        </form>
-
-                    </div>
-                    <div class="tabs-item" id="tab-2">
-                        <form class="registry-tabs-content">
-                            <div class="form-field">
-                                <label for="regustry-surname" class="form-label">Фамилия</label>
-                                <input type="text" class="form-input" id="regustry-surname" name="regustry-surname">
-                            </div>
-                            <div class="form-field">
-                                <label for="regustry-first-name" class="form-label">Имя</label>
-                                <input type="text" class="form-input" id="regustry-first-name"
-                                       name="regustry-first-name">
-                            </div>
-                            <div class="form-field">
-                                <label for="regustry-role" class="form-label">Роль</label>
-                                <select name="regustry-role" id="regustry-role" class="form-input">
-                                    <option value=""></option>
-                                    <option value="hr">HR</option>
-                                    <option value="mentor">Наставник</option>
-                                    <option value="expert">Эксперт</option>
-                                </select>
-                            </div>
-                            <div class="form-field">
-                                <label for="registry-email" class="form-label">E-mail</label>
-                                <input type="email" class="form-input" id="registry-email" name="registry-email">
-                            </div>
-                            <div class="form-field">
-                                <label for="password" class="form-label">Пароль</label>
-                                <input type="text" class="form-input" id="password1" name="password">
-                            </div>
-                            <button type="submit" class="form-button">Зарегистрироваться</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
-
     <footer>
     </footer>
 </div>

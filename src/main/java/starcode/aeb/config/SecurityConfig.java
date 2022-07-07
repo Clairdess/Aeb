@@ -2,7 +2,6 @@ package starcode.aeb.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,11 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import starcode.aeb.CustomOAuth2UserService;
+import starcode.aeb.domain.CustomOAuth2User;
 import starcode.aeb.domain.User;
 import starcode.aeb.repo.UserRepository;
-
-import java.time.LocalDateTime;
 
 @Configuration
 @EnableWebSecurity
@@ -26,10 +26,13 @@ import java.time.LocalDateTime;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
+
 
     @Autowired
-    public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+    public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, UserRepository userRepository) {
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -37,13 +40,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/auth/registration", "/login**", "/css/**", "/js/**", "/plugins/**", "/images/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/", "/auth/registration", "/login**", "/css/**", "/js/**", "/plugins/**", "/images/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/auth/login").permitAll()
-                .defaultSuccessUrl("/")
+                    .formLogin().permitAll()
+                    .loginPage("/auth/login")
+                    .failureForwardUrl("/auth/login?error").permitAll()
+                    .defaultSuccessUrl("/")
+                .and()
+                    .oauth2Login()
+                    .loginPage("/auth/login")
+                    .userInfoEndpoint()
+                    .userService(oauthUserService)
+                    .and()
+                    .successHandler((request, response, authentication) -> {
+                        DefaultOidcUser oauthUser = (DefaultOidcUser) authentication.getPrincipal();
+                        String email = oauthUser.getAttribute("email");
+                        String name = oauthUser.getAttribute("name");
+                        User newUser = new User();
+                        newUser.setEmail(email);
+                        newUser.setFirstName(name);
+                        userRepository.save(newUser);
+                        response.sendRedirect("/");
+                    })
+                    .failureHandler((request, response, exception) ->
+                            response.sendRedirect("/")
+                    )
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
@@ -54,13 +76,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Bean
     protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
+    }
+
+    private CustomOAuth2UserService oauthUserService;
+    @Autowired
+    public void setOauthUserService(CustomOAuth2UserService oauthUserService) {
+        this.oauthUserService = oauthUserService;
     }
 
     @Bean

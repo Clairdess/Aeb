@@ -1,1 +1,28 @@
 version: '3'
+services:
+  postgres:
+    image: 'postgres:10'
+    container_name: 'aeb-postgres'
+    ports:
+      - "5432:5432"
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_DB=starcode'
+      - 'PGDATA=/var/lib/postgresql/data/pgdata'
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data/pgdata
+    restart: always
+
+  app:
+    build: ./
+    container_name: 'aeb-app'
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/starcode'
+      - 'SPRING_DATASOURCE_USERNAME=postgres'
+      - 'SPRING_DATASOURCE_PASSWORD=postgres'
+    ports:
+      - "9001:9001"
+    restart: always
+    links:
+      - postgres
